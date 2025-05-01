@@ -13,38 +13,6 @@ interface AuthState {
   updateProfile: (data: Partial<User>) => void;
 }
 
-// Mock login function - in a real app, this would call an API
-const mockLogin = async (email: string, password: string): Promise<User> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (email === 'user@example.com' && password === 'password') {
-        resolve({
-          id: '1',
-          name: 'John Doe',
-          email: 'user@example.com',
-          avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=300',
-        });
-      } else {
-        reject(new Error('Invalid email or password'));
-      }
-    }, 500);
-  });
-};
-
-// Mock register function
-const mockRegister = async (name: string, email: string, password: string): Promise<User> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        id: '1',
-        name,
-        email,
-        avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=300',
-      });
-    }, 500);
-  });
-};
-
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
@@ -66,11 +34,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
-      // Ambil data pengguna dari localStorage
       const storedUsers = localStorage.getItem('users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
   
-      // Cari pengguna berdasarkan email dan password
       const user = users.find(
         (user: any) => user.email === email && user.password === password
       );
@@ -79,7 +45,6 @@ export const useAuthStore = create<AuthState>((set) => ({
         throw new Error('Invalid email or password');
       }
   
-      // Simpan pengguna ke state
       set({ user, isAuthenticated: true, isLoading: false });
       localStorage.setItem('user', JSON.stringify(user));
     } catch (error) {
@@ -94,29 +59,24 @@ export const useAuthStore = create<AuthState>((set) => ({
   register: async (name, email, password) => {
     set({ isLoading: true, error: null });
     try {
-      // Ambil data pengguna dari localStorage
       const storedUsers = localStorage.getItem('users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
   
-      // Cek apakah email sudah digunakan
       const emailExists = users.some((user: any) => user.email === email);
       if (emailExists) {
         throw new Error('Email already in use');
       }
   
-      // Tambahkan pengguna baru
       const newUser = {
-        id: Date.now().toString(), // ID unik
+        id: Date.now().toString(), 
         name,
         email,
-        password, // Simpan password langsung (tidak aman, hanya untuk demo)
+        password, 
       };
       users.push(newUser);
   
-      // Simpan kembali ke localStorage
       localStorage.setItem('users', JSON.stringify(users));
   
-      // Simpan pengguna ke state
       set({ user: newUser, isAuthenticated: true, isLoading: false });
     } catch (error) {
       set({

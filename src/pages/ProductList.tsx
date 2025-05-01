@@ -84,7 +84,6 @@ const ProductList: React.FC = () => {
         break;
       case 'newest':
       default:
-        // Assuming newest items have the "isNew" flag
         result.sort((a, b) => {
           if (a.isNew && !b.isNew) return -1;
           if (!a.isNew && b.isNew) return 1;

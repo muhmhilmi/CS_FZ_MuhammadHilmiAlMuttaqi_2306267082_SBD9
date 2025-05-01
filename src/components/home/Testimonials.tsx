@@ -13,7 +13,7 @@ const testimonials = [
   },
   {
     id: '2',
-    name: 'James Wilson',
+    name: 'James Januar',
     title: 'Loyal Customer',
     content: 'I love how curated the collections are. It makes shopping so much easier when you know everything is high quality and stylish. Will definitely keep coming back!',
     rating: 5,
@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     id: '3',
-    name: 'Emma Thompson',
+    name: 'Emma Shihab',
     title: 'Style Blogger',
     content: 'As someone who\'s always looking for unique pieces, I\'m impressed by the range of styles offered. The website is easy to navigate and my orders always arrive on time.',
     rating: 4,

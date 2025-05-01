@@ -40,14 +40,12 @@ export const useCartStore = create<CartState>((set, get) => ({
       let updatedItems;
 
       if (existingItemIndex !== -1) {
-        // Item exists, update quantity
         updatedItems = [...state.items];
         updatedItems[existingItemIndex] = {
           ...updatedItems[existingItemIndex],
           quantity: updatedItems[existingItemIndex].quantity + newItem.quantity,
         };
       } else {
-        // Item doesn't exist, add it
         updatedItems = [...state.items, newItem];
       }
 
